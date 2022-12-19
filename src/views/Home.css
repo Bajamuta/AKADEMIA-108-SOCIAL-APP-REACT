@@ -6,7 +6,7 @@
 .LoadMoreButton {
     width: 200px;
     display: inherit;
-    margin-bottom: 20px;
+    margin: 20px auto;
     background-color: cornflowerblue;
     color: white;
     border: none;

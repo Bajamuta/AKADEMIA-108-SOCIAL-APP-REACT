@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Post} from "../interfaces";
 import './PostElement.css';
 
@@ -7,6 +7,9 @@ interface PostProps {
 }
 
 export default function PostElement(props: PostProps) {
+
+    const [likesCount, setLikesCount] = useState(props.post.likes.length);
+
     return (
         <div className="PostsContainer" key={props.post.id}>
             <div className="SinglePost">
@@ -19,7 +22,7 @@ export default function PostElement(props: PostProps) {
                     <p key={props.post.id}>{props.post.content}</p>
                 </div>
                 <div className="SinglePostFooter">
-                    <span>Likes: {props.post.likes.length}</span>
+                    <span>Likes: {likesCount}</span>
                 </div>
             </div>
         </div>

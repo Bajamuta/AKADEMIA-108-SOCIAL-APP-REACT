@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 import {Post} from "../interfaces";
 import './Home.css';
+import PostElement from "./PostElement";
 export default function Home() {
 
     const API_URL = "https://akademia108.pl/api/social-app";
@@ -12,7 +13,7 @@ export default function Home() {
         axios.post(`${API_URL}/post/latest`).then(
             (response: AxiosResponse<any>) => {
                 // how to map to correct interface type?
-                console.log(response.data);
+                console.log(response);
                 setPosts(response.data as Post[]);
             }
         )
@@ -32,21 +33,7 @@ export default function Home() {
             <div className="PostList">
                 {posts.map(
                     (post: Post) => {
-                        return <div className="PostsContainer" key={post.id}>
-                            <div className="SinglePost">
-                                <div className="SinglePostHeader">
-                                    <img src={post.user.avatar_url} alt="user image"/>
-                                    <h3>{post.user.username}</h3>
-                                    <span>created at: {post.created_at.toString()}</span>
-                                </div>
-                                <div className="SinglePostBody">
-                                    <p key={post.id}>{post.content}</p>
-                                </div>
-                                <div className="SinglePostFooter">
-                                    <span>{post.likes.length}</span>
-                                </div>
-                            </div>
-                        </div>
+                        return <PostElement post={post}></PostElement>
                     }
                 )}
             </div>

@@ -1,6 +1,8 @@
-import React, {ChangeEvent, ChangeEventHandler, FormEvent, useState} from "react";
+import React, {FormEvent, useState} from "react";
 import './Login.css';
-import {FormDataLogin} from "../interfaces";
+import {FormDataLogin, ResponseLogin} from "../interfaces";
+import axios, {AxiosResponse} from "axios";
+import {API_URL} from "../index";
 
 export default function Login() {
     const [formData, setFormData] = useState<FormDataLogin>({
@@ -10,7 +12,13 @@ export default function Login() {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(formData);
+        axios.post(`${API_URL}/login`, {
+            username: formData.username,
+            password: formData.password
+        }).then((response: AxiosResponse<ResponseLogin>) => {
+            console.log('response', response);
+        })
+            .catch((error) => console.error("An error has occured during logging in:", error));
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +32,7 @@ export default function Login() {
     console.log(formData);
     return <div className="LoginFormContainer">
         <h2>Log In</h2>
-        <form onSubmit={(e) => handleSubmit(e)} className="LoginForm">
+        <form onSubmit={handleSubmit} className="LoginForm">
             <label form={formData.username}>Username*:</label>
             <input type="text"
                    name="username"

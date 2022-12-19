@@ -9,6 +9,8 @@ import ErrorPage from "./views/ErrorPage";
 import Login from "./views/Login";
 import SignUp from "./views/SignUp";
 
+export const API_URL = "https://akademia108.pl/api/social-app";
+
 const router = createBrowserRouter([
     {
         path: "/",

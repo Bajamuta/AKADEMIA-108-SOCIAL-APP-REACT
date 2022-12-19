@@ -3,9 +3,8 @@ import axios, {AxiosResponse} from "axios";
 import {Post} from "../interfaces";
 import './Home.css';
 import PostElement from "./PostElement";
+import {API_URL} from "../index";
 export default function Home() {
-
-    const API_URL = "https://akademia108.pl/api/social-app";
 
     const [posts, setPosts] = useState<Post[]>([]);
 

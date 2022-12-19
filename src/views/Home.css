@@ -13,3 +13,8 @@
     padding: 10px;
     border-radius: 20px;
 }
+
+.LoadMoreButton:focus, .LoadMoreButton:hover, .LoadMoreButton:active {
+    background-color: dodgerblue;
+    cursor: pointer;
+}

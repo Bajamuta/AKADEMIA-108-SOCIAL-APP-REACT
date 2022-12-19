@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {Link, Outlet} from "react-router-dom";
+import * as localforage from "localforage";
+import {ResponseLogin, User} from "../interfaces";
 
 function App() {
   return (
@@ -27,3 +29,23 @@ function App() {
 }
 
 export default App;
+
+export async function setLoggedUser(user: ResponseLogin) {
+    await localforage.setItem("loggedUser", user);
+    return user;
+}
+
+export async function getLoggedUser() {
+    let loggedUser = await localforage.getItem("loggedUser");
+    return loggedUser ?? null;
+}
+
+export async function removeLoggedUser() {
+    let loggedUser = await localforage.getItem("loggedUser");
+    if (loggedUser)
+    {
+        await localforage.setItem("loggedUser", null);
+        return true;
+    }
+    return false;
+}

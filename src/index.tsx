@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import App from './views/App';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import Home from "./Home";
-import ErrorPage from "./ErrorPage";
-import Login from "./Login";
-import SignUp from "./SignUp";
+import Home from "./views/Home";
+import ErrorPage from "./views/ErrorPage";
+import Login from "./views/Login";
+import SignUp from "./views/SignUp";
 
 const router = createBrowserRouter([
     {

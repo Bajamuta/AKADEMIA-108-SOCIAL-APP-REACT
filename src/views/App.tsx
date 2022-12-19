@@ -8,7 +8,7 @@ function App() {
       <header className="App-header">
           <h1>Social App</h1>
       </header>
-        <nav>
+        <nav className="AppNavbar">
             <ul>
                 <li>
                     <Link to={"/home"}>HOME</Link>

@@ -1,0 +1,23 @@
+.PostList {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.SinglePost {
+    border: 1px solid gray;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.SinglePostHeader {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.SinglePostHeader img {
+    height: 100%;
+    border-radius: 100%;
+}

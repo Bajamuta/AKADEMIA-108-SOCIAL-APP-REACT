@@ -29,7 +29,7 @@ export default function Home() {
             (response: AxiosResponse<any>) => {
                 // how to map to correct interface type?
                 console.log(response);
-                setPosts(response.data as Post[]);
+                setPosts(posts.concat(response.data as Post[]));
             }
         )
             .catch((error) => {

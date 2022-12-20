@@ -10,6 +10,9 @@ export default function Home() {
     const obj: ObjectContext = useOutletContext();
     const [posts, setPosts] = useState<Post[]>([]);
 
+    // how it works exactly?
+    axios.defaults.headers.common['Authorization'] = "Bearer " + (obj.loggedUser.jwt_token.length > 0 ? obj.loggedUser.jwt_token : '');
+
     const getLatestPosts = () => {
         axios.post(`${API_URL}/post/latest`).then(
             (response: AxiosResponse<any>) => {

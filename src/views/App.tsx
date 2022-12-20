@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Link, Outlet} from "react-router-dom";
-import * as localforage from "localforage";
-import {ResponseLogin, User} from "../interfaces";
+import {ResponseLogin} from "../interfaces";
 
 function App() {
+    const initLocal = localStorage.getItem("loggedUser") || '';
+    const [loggedUser, setLoggedUser] = useState<ResponseLogin>(initLocal.length > 0 ? JSON.parse( initLocal) : {jwt_token: ''});
+
   return (
     <div className="App">
       <header className="App-header">
@@ -15,37 +17,26 @@ function App() {
                 <li>
                     <Link to={"/home"}>HOME</Link>
                 </li>
-                <li>
-                    <Link to={"/login"}>LOG IN</Link>
-                </li>
-                <li>
-                    <Link to={"/signup"}>SIGN UP</Link>
-                </li>
+                {loggedUser.jwt_token.length == 0 &&
+                    <li>
+                        <Link to={"/login"}>LOG IN</Link>
+                    </li>
+                }
+                {loggedUser.jwt_token.length == 0 &&
+                    <li>
+                        <Link to={"/signup"}>SIGN UP</Link>
+                    </li>
+                }
+                {loggedUser.jwt_token.length > 0 &&
+                    <li>
+                        <Link to={"/signout"}>SIGN OUT</Link>
+                    </li>
+                }
             </ul>
         </nav>
-        <Outlet/>
+        <Outlet context={{loggedUser, setLoggedUser}}/>
     </div>
   );
 }
 
 export default App;
-
-export async function setLoggedUser(user: ResponseLogin) {
-    await localforage.setItem("loggedUser", user);
-    return user;
-}
-
-export async function getLoggedUser() {
-    let loggedUser = await localforage.getItem("loggedUser");
-    return loggedUser ?? null;
-}
-
-export async function removeLoggedUser() {
-    let loggedUser = await localforage.getItem("loggedUser");
-    if (loggedUser)
-    {
-        await localforage.setItem("loggedUser", null);
-        return true;
-    }
-    return false;
-}

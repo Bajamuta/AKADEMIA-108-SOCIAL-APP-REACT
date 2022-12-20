@@ -18,3 +18,29 @@
     background-color: dodgerblue;
     cursor: pointer;
 }
+
+.NewPostContainer {
+    width: 800px;
+    margin: 0 auto 50px auto;
+    display: flex;
+    column-gap: 30px;
+}
+
+.NewPostContainer .NewPostTextarea {
+    width: 100%;
+}
+
+.NewPostContainer .NewPostAddButton {
+    padding: 10px 50px;
+    background-color: cornflowerblue;
+    color: white;
+    border: none;
+    border-radius: 20px;
+}
+
+.NewPostContainer .NewPostAddButton:hover,
+.NewPostContainer .NewPostAddButton:active,
+.NewPostContainer .NewPostAddButton:focus {
+    background-color: dodgerblue;
+    cursor: pointer;
+}

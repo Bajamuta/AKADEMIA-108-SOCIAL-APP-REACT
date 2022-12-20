@@ -26,7 +26,21 @@ export default function Home() {
             })
     }
 
-    const getNextPosts = () => {
+    const getNewestPosts = () => {
+        axios.post(`${API_URL}/post/newer-then`, {
+            date: posts[0].created_at
+        }).then(
+            (response: AxiosResponse<any>) => {
+                // how to map to correct interface type?
+                setPosts((response.data as Post[]).concat(posts));
+            }
+        )
+            .catch((error) => {
+                console.error('An error has occured:', error);
+            })
+    }
+
+    const getOlderPosts = () => {
         axios.post(`${API_URL}/post/older-then`, {
             date: posts[posts.length - 1].created_at
         }).then(
@@ -46,8 +60,11 @@ export default function Home() {
             content: newPostContent
         }).then(
             (response: AxiosResponse<any>) => {
-                setNewPostContent('');
-                getLatestPosts();
+                if(response.status === 200)
+                {
+                    setNewPostContent('');
+                    getNewestPosts();
+                }
             }
         )
             .catch((error) => {
@@ -81,7 +98,7 @@ export default function Home() {
                     }
                 )}
             </div>
-            <button className="LoadMoreButton" onClick={getNextPosts}>Load more</button>
+            <button className="LoadMoreButton" onClick={getOlderPosts}>Load more</button>
         </div>
     );
 }

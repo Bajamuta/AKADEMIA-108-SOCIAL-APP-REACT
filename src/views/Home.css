@@ -22,8 +22,12 @@
 .NewPostContainer {
     width: 800px;
     margin: 0 auto 50px auto;
+}
+
+.NewPostContainer .NewPostForm {
     display: flex;
     column-gap: 30px;
+    width: 100%;
 }
 
 .NewPostContainer .NewPostTextarea {

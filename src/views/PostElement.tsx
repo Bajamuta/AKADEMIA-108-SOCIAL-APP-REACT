@@ -14,8 +14,8 @@ export default function PostElement(props: PostProps) {
         <div className="PostsContainer" key={props.post.id}>
             <div className="SinglePost">
                 <div className="SinglePostHeader">
-                    <img src={props.post.user.avatar_url} alt="user image"/>
-                    <h3>{props.post.user.username}</h3>
+                    <img src={props.post.user?.avatar_url} alt="user image"/>
+                    <h3>{props.post.user?.username}</h3>
                     <span>created at: {props.post.created_at.toString()}</span>
                 </div>
                 <div className="SinglePostBody">

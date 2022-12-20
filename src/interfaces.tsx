@@ -4,7 +4,7 @@ export interface Post {
     created_at: Date,
     updated_at: Date,
     likes: User[],
-    user: User
+    user?: User
 }
 
 export interface User {
@@ -13,7 +13,7 @@ export interface User {
     email: string,
     avatar_url: string,
     created_at: Date,
-    updated_at: Date
+    updated_at?: Date
 }
 
 export interface FormDataLogin {

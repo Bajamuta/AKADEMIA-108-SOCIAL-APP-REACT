@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 import {ObjectContext, Post} from "../interfaces";
 import './Home.css';
@@ -9,6 +9,7 @@ export default function Home() {
 
     const obj: ObjectContext = useOutletContext();
     const [posts, setPosts] = useState<Post[]>([]);
+    const [newPostContent, setNewPostContent] = useState<string>('');
 
     // how it works exactly?
     axios.defaults.headers.common['Authorization'] = "Bearer " + (obj.loggedUser.jwt_token.length > 0 ? obj.loggedUser.jwt_token : '');
@@ -39,6 +40,21 @@ export default function Home() {
             })
     }
 
+    const addNewPost = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        axios.post(`${API_URL}/post/add`, {
+            content: newPostContent
+        }).then(
+            (response: AxiosResponse<any>) => {
+                setNewPostContent('');
+                getLatestPosts();
+            }
+        )
+            .catch((error) => {
+                console.error('An error has occurred during adding new post:', error);
+            })
+    }
+
     useEffect(() => {
         getLatestPosts();
     }, []);
@@ -47,8 +63,14 @@ export default function Home() {
         <div className="HomeContainer">
             {obj.loggedUser.jwt_token.length > 0 &&
                 <div className="NewPostContainer">
-                    <textarea rows={3} className="NewPostTextarea" placeholder="Write new post"/>
-                    <button className="NewPostAddButton">Add</button>
+                    <form className="NewPostForm" onSubmit={(event: FormEvent<HTMLFormElement>) => addNewPost(event)}>
+                        <textarea rows={3}
+                                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNewPostContent(e.target.value)}
+                                  value={newPostContent}
+                                  className="NewPostTextarea"
+                                  placeholder="Write new post"/>
+                        <button className="NewPostAddButton">Add</button>
+                    </form>
                 </div>
             }
             <div className="PostList">

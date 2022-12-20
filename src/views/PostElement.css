@@ -20,3 +20,17 @@
 .SinglePostFooter {
     text-align: right;
 }
+
+.SinglePostDeleteButton {
+    background-color: cornflowerblue;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 20px;
+    margin-left: 20px;
+}
+
+.SinglePostDeleteButton:hover, .SinglePostDeleteButton:focus, .SinglePostDeleteButton:active {
+    background-color: dodgerblue;
+    cursor: pointer;
+}

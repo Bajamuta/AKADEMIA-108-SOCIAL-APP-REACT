@@ -1,3 +1,8 @@
+.HomeContainer {
+    display: flex;
+    flex-flow: column;
+}
+
 .PostList {
     max-width: 800px;
     margin: 0 auto;
@@ -16,4 +21,8 @@
 
 .NewPostContainer .NewPostTextarea {
     width: 100%;
+}
+
+.LoadMoreButton {
+    margin: 20px auto;
 }

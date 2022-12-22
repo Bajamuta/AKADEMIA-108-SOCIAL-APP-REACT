@@ -112,7 +112,7 @@ export default function Home() {
                     }
                 )}
             </div>
-            <button className="Button PrimaryButton" onClick={getOlderPosts}>Load more</button>
+            <button className="Button PrimaryButton LoadMoreButton" onClick={getOlderPosts}>Load more</button>
         </div>
     );
 }

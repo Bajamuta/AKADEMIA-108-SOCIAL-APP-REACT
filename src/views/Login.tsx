@@ -39,9 +39,9 @@ export default function Login() {
             [name]: target.value
         });
     }
-    return (<div className="LoginFormContainer">
+    return (<div className="FormContainer">
         <h2>Log In</h2>
-        <form className="LoginForm" onSubmit={handleSubmit}>
+        <form className="FormBody" onSubmit={handleSubmit}>
             <label form={formData.username}>Username*:</label>
             <input type="text"
                    name="username"

@@ -15,8 +15,8 @@ code {
 .Button {
   border: none;
   border-radius: 20px;
-  padding: 20px;
-  margin-left: 20px;
+  padding: 10px 20px;
+  margin-top: 20px;
 }
 
 .Button.PrimaryButton {
@@ -26,6 +26,11 @@ code {
 
 .Button.DangerButton {
   background-color: darkred;
+  color: white;
+}
+
+.Button.DisabledButton {
+  background-color: lightgray;
   color: white;
 }
 
@@ -51,4 +56,15 @@ code {
 
 .FontUppercase{
   text-transform: uppercase;
+}
+
+.FormContainer {
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.FormBody {
+  display: flex;
+  flex-flow: column;
+  row-gap: 10px;
 }

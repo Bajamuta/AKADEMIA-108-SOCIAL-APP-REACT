@@ -16,9 +16,22 @@ export interface User {
     updated_at?: Date
 }
 
+export interface InputValue {
+    value: string,
+    isValid: boolean,
+    error: string
+}
+
 export interface FormDataLogin {
     username: string,
     password: string
+}
+
+export interface FormDataRegister{
+    username: InputValue,
+    password: InputValue,
+    email: InputValue,
+    passwordConfirm: InputValue
 }
 
 export interface ResponseLogin {

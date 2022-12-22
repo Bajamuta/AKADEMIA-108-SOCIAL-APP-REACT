@@ -9,6 +9,7 @@ import ErrorPage from "./views/ErrorPage";
 import Login from "./views/Login";
 import SignUp from "./views/SignUp";
 import SignOut from "./views/SignOut";
+import Registered from "./views/Registered";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,9 @@ const router = createBrowserRouter([
             },
             {
                 path: "signout", element: <SignOut/>
+            },
+            {
+                path: "registered", element: <Registered/>
             }
         ],
         errorElement: <ErrorPage/>

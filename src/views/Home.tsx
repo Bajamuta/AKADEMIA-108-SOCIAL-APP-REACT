@@ -100,7 +100,7 @@ export default function Home() {
                                   value={newPostContent}
                                   className="NewPostTextarea"
                                   placeholder="Write new post"/>
-                        <button className="NewPostAddButton">Add</button>
+                        <button className="Button PrimaryButton">Add</button>
                     </form>
                 </div>
             }
@@ -112,7 +112,7 @@ export default function Home() {
                     }
                 )}
             </div>
-            <button className="LoadMoreButton" onClick={getOlderPosts}>Load more</button>
+            <button className="Button PrimaryButton" onClick={getOlderPosts}>Load more</button>
         </div>
     );
 }

@@ -8,17 +8,3 @@
     flex-flow: column;
     row-gap: 10px;
 }
-
-.LoginFormButton {
-    margin-top: 20px;
-    background-color: cornflowerblue;
-    color: white;
-    border-radius: 20px;
-    border: none;
-    padding: 10px;
-}
-
-.LoginFormButton:hover, .LoginFormButton:active, .LoginFormButton:focus {
-    background-color: dodgerblue;
-    cursor: pointer;
-}

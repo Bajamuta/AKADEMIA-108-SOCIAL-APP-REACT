@@ -15,8 +15,7 @@ export default function PostElement(props: PostProps) {
 
     const [likesCount, setLikesCount] = useState<number>(props.post.likes.length);
     const [dateOfPost, setDateOfPost] = useState<string>(datePipe(props.post.created_at));
-
-
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
 
     return (
         <div className="PostsContainer" key={props.post.id}>
@@ -33,10 +32,22 @@ export default function PostElement(props: PostProps) {
                     <span>Likes: {likesCount}</span>
                     {
                         objectContext.loggedUser.username === props.post.user?.username &&
-                        <button className="SinglePostDeleteButton" onClick={props.deletePost}>Delete</button>
+                        <button className="Button DangerButton" onClick={() => setModalVisible(true)}>Delete</button>
                     }
                 </div>
             </div>
+            {modalVisible &&
+                <div className="SinglePostDeleteConfirm">
+                    <p className="FontBold FontUppercase">Are you sure?</p>
+                    <div className="DeleteConfirmButtonsContainer">
+                        <button className="Button PrimaryButton" onClick={() => setModalVisible(false)}>CANCEL</button>
+                        <button className="Button DangerButton" onClick={() => {
+                            setModalVisible(false);
+                            props.deletePost();
+                        }}>DELETE</button>
+                    </div>
+                </div>
+            }
         </div>
     );
 }

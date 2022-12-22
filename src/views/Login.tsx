@@ -50,7 +50,7 @@ export default function Login() {
             <label form={formData.password}>Password*:</label>
             <input type="password" placeholder="Enter password"
                    name="password" onChange={handleInputChange}/>
-            <button type="submit" className="LoginFormButton">Login</button>
+            <button type="submit" className="Button PrimaryButton">Login</button>
         </form>
     </div>);
 }

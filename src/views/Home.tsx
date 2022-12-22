@@ -1,21 +1,21 @@
 import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
-import {ObjectContext, Post} from "../interfaces";
+import {ObjectContext, Post} from "../helpers/interfaces";
 import './Home.css';
 import PostElement from "./PostElement";
-import {API_URL} from "../index";
 import {useOutletContext} from "react-router-dom";
+import {REACT_APP_API_URL} from "../react-app-env.d";
 export default function Home() {
 
-    const obj: ObjectContext = useOutletContext();
+    const objectContext: ObjectContext = useOutletContext();
     const [posts, setPosts] = useState<Post[]>([]);
     const [newPostContent, setNewPostContent] = useState<string>('');
 
     // how it works exactly?
-    axios.defaults.headers.common['Authorization'] = "Bearer " + (obj.loggedUser.jwt_token.length > 0 ? obj.loggedUser.jwt_token : '');
+    axios.defaults.headers.common['Authorization'] = "Bearer " + (objectContext.loggedUser.jwt_token.length > 0 ? objectContext.loggedUser.jwt_token : '');
 
     const getLatestPosts = () => {
-        axios.post(`${API_URL}/post/latest`).then(
+        axios.post(`${REACT_APP_API_URL}/post/latest`).then(
             (response: AxiosResponse<any>) => {
                 // how to map to correct interface type?
                 setPosts(response.data as Post[]);
@@ -27,7 +27,7 @@ export default function Home() {
     }
 
     const getNewestPosts = () => {
-        axios.post(`${API_URL}/post/newer-then`, {
+        axios.post(`${REACT_APP_API_URL}/post/newer-then`, {
             date: posts[0].created_at
         }).then(
             (response: AxiosResponse<any>) => {
@@ -41,7 +41,7 @@ export default function Home() {
     }
 
     const getOlderPosts = () => {
-        axios.post(`${API_URL}/post/older-then`, {
+        axios.post(`${REACT_APP_API_URL}/post/older-then`, {
             date: posts[posts.length - 1].created_at
         }).then(
             (response: AxiosResponse<any>) => {
@@ -56,7 +56,7 @@ export default function Home() {
 
     const addNewPost = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        axios.post(`${API_URL}/post/add`, {
+        axios.post(`${REACT_APP_API_URL}/post/add`, {
             content: newPostContent
         }).then(
             (response: AxiosResponse<any>) => {
@@ -78,7 +78,7 @@ export default function Home() {
 
     return (
         <div className="HomeContainer">
-            {obj.loggedUser.jwt_token.length > 0 &&
+            {objectContext.loggedUser.jwt_token.length > 0 &&
                 <div className="NewPostContainer">
                     <form className="NewPostForm" onSubmit={(event: FormEvent<HTMLFormElement>) => addNewPost(event)}>
                         <textarea rows={3}

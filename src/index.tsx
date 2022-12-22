@@ -10,15 +10,12 @@ import Login from "./views/Login";
 import SignUp from "./views/SignUp";
 import SignOut from "./views/SignOut";
 
-export const API_URL = "https://akademia108.pl/api/social-app";
-
 const router = createBrowserRouter([
     {
-        path: "/",
         element: <App/>,
         children: [
             {
-                path: "home", element: <Home/>,
+                path: "/", element: <Home/>, index: true
             },
             {
                 path: "login", element: <Login/>,
@@ -39,7 +36,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
   </React.StrictMode>
 );
 

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Link, Outlet} from "react-router-dom";
-import {ResponseLogin} from "../interfaces";
+import {ResponseLogin} from "../helpers/interfaces";
 
 function App() {
     const initLocal = localStorage.getItem("loggedUser") || '';
@@ -15,7 +15,7 @@ function App() {
         <nav className="AppNavbar">
             <ul>
                 <li>
-                    <Link to={"/home"}>HOME</Link>
+                    <Link to={"/"}>HOME</Link>
                 </li>
                 {loggedUser.jwt_token.length == 0 &&
                     <li>

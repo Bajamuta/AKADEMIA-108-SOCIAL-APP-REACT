@@ -1,13 +1,13 @@
 import React, {FormEvent, useState} from "react";
 import './Login.css';
-import {FormDataLogin, ObjectContext, ResponseLogin} from "../interfaces";
+import {FormDataLogin, ObjectContext, ResponseLogin} from "../helpers/interfaces";
 import axios, {AxiosResponse} from "axios";
-import {API_URL} from "../index";
 import {useNavigate, useOutletContext} from "react-router-dom";
+import {REACT_APP_API_URL} from "../react-app-env.d";
 
 export default function Login() {
 
-    const obj: ObjectContext = useOutletContext();
+    const objectContext: ObjectContext = useOutletContext();
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState<FormDataLogin>({
@@ -17,15 +17,15 @@ export default function Login() {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        axios.post(`${API_URL}/user/login`, {
+        axios.post(`${REACT_APP_API_URL}/user/login`, {
             username: formData.username,
             password: formData.password
         }).then((response: AxiosResponse<any>) => {
             if (response.status === 200)
             {
                 localStorage.setItem("loggedUser", JSON.stringify(response.data as ResponseLogin));
-                obj.setLoggedUser(response.data as ResponseLogin);
-                navigate('/home');
+                objectContext.setLoggedUser(response.data as ResponseLogin);
+                navigate('/');
             }
         })
             .catch((error) => console.error("An error has occurred during logging in:", error));
@@ -39,7 +39,7 @@ export default function Login() {
             [name]: target.value
         });
     }
-    return <div className="LoginFormContainer">
+    return (<div className="LoginFormContainer">
         <h2>Log In</h2>
         <form className="LoginForm" onSubmit={handleSubmit}>
             <label form={formData.username}>Username*:</label>
@@ -52,5 +52,5 @@ export default function Login() {
                    name="password" onChange={handleInputChange}/>
             <button type="submit" className="LoginFormButton">Login</button>
         </form>
-    </div>;
+    </div>);
 }

@@ -12,7 +12,7 @@ export default function SignUp() {
         console.log(username, email, password);
     }
 
-    return <div className="RegisterFormContainer">
+    return (<div className="RegisterFormContainer">
         <form onSubmit={(e) => handleSubmit(e)}>
             <label form={username}>Username*:</label>
             <input type="text"
@@ -29,5 +29,5 @@ export default function SignUp() {
                    value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}/>
             <button type="submit">Sign Up</button>
         </form>
-    </div>;
+    </div>);
 }

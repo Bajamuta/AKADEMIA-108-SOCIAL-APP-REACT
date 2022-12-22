@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import {ObjectContext, Post} from "../interfaces";
+import {ObjectContext, Post} from "../helpers/interfaces";
 import './PostElement.css';
 import {useOutletContext} from "react-router-dom";
 import axios, {AxiosResponse} from "axios";
-import {API_URL} from "../index";
+import {REACT_APP_API_URL} from "../react-app-env.d";
 
 interface PostProps {
     post: Post
@@ -11,7 +11,7 @@ interface PostProps {
 
 export default function PostElement(props: PostProps) {
 
-    const obj: ObjectContext = useOutletContext();
+    const objectContext: ObjectContext = useOutletContext();
 
     const datePipe = (dataString: any) => {
         const d: Date = new Date(dataString);
@@ -25,7 +25,7 @@ export default function PostElement(props: PostProps) {
     const [dateOfPost, setDateOfPost] = useState<string>(datePipe(props.post.created_at));
 
     const deletePost = (id: number) => {
-        axios.post(`${API_URL}/post/delete`, {
+        axios.post(`${REACT_APP_API_URL}/post/delete`, {
             post_id: id
         }).then(
             (response: AxiosResponse<any>) => {
@@ -51,7 +51,7 @@ export default function PostElement(props: PostProps) {
                 <div className="SinglePostFooter">
                     <span>Likes: {likesCount}</span>
                     {
-                        obj.loggedUser.username === props.post.user?.username &&
+                        objectContext.loggedUser.username === props.post.user?.username &&
                         <button className="SinglePostDeleteButton" onClick={() => deletePost(props.post.id)}>Delete</button>
                     }
                 </div>

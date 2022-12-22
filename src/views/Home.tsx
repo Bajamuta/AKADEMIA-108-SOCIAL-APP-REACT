@@ -60,8 +60,7 @@ export default function Home() {
             content: newPostContent
         }).then(
             (response: AxiosResponse<any>) => {
-                if(response.status === 200)
-                {
+                if(response.status === 200) {
                     setNewPostContent('');
                     getNewestPosts();
                 }
@@ -69,6 +68,21 @@ export default function Home() {
         )
             .catch((error) => {
                 console.error('An error has occurred during adding new post:', error);
+            })
+    }
+
+    const deletePost = (id: number) => {
+        axios.post(`${REACT_APP_API_URL}/post/delete`, {
+            post_id: id
+        }).then(
+            (response: AxiosResponse<any>) => {
+                if(response.status === 200) {
+                    getLatestPosts();
+                }
+            }
+        )
+            .catch((error) => {
+                console.error('An error has occurred during deleting the post:', error);
             })
     }
 
@@ -94,7 +108,7 @@ export default function Home() {
                 <h2>Posts</h2>
                 {posts.map(
                     (post: Post) => {
-                        return <PostElement post={post} key={post.id}/>
+                        return <PostElement post={post} key={post.id} deletePost={() => deletePost(post.id)}/>
                     }
                 )}
             </div>

@@ -2,40 +2,21 @@ import React, {useState} from "react";
 import {ObjectContext, Post} from "../helpers/interfaces";
 import './PostElement.css';
 import {useOutletContext} from "react-router-dom";
-import axios, {AxiosResponse} from "axios";
-import {REACT_APP_API_URL} from "../react-app-env.d";
+import {datePipe} from "../helpers/functions";
 
 interface PostProps {
-    post: Post
+    post: Post,
+    deletePost: () => void
 }
 
 export default function PostElement(props: PostProps) {
 
     const objectContext: ObjectContext = useOutletContext();
 
-    const datePipe = (dataString: any) => {
-        const d: Date = new Date(dataString);
-        const year = d.getFullYear();
-        const month = d.getMonth() < 10 ? '0' + d.getMonth() : d.getMonth();
-        const day = d.getDate() < 10 ? '0' + d.getDate() : d.getDate();
-        return year + '-' + month + '-' + day;
-    }
-
     const [likesCount, setLikesCount] = useState<number>(props.post.likes.length);
     const [dateOfPost, setDateOfPost] = useState<string>(datePipe(props.post.created_at));
 
-    const deletePost = (id: number) => {
-        axios.post(`${REACT_APP_API_URL}/post/delete`, {
-            post_id: id
-        }).then(
-            (response: AxiosResponse<any>) => {
-                console.log(response);
-            }
-        )
-            .catch((error) => {
-                console.error('An error has occurred during deleting the post:', error);
-            })
-    }
+
 
     return (
         <div className="PostsContainer" key={props.post.id}>
@@ -52,7 +33,7 @@ export default function PostElement(props: PostProps) {
                     <span>Likes: {likesCount}</span>
                     {
                         objectContext.loggedUser.username === props.post.user?.username &&
-                        <button className="SinglePostDeleteButton" onClick={() => deletePost(props.post.id)}>Delete</button>
+                        <button className="SinglePostDeleteButton" onClick={props.deletePost}>Delete</button>
                     }
                 </div>
             </div>

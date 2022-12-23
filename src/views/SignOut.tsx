@@ -8,7 +8,7 @@ export default function SignOut() {
     const objectContext: ObjectContext = useOutletContext();
 
     useEffect(() => {
-        localStorage.setItem("loggedUser", '');
+        localStorage.removeItem("loggedUser");
         objectContext.setLoggedUser({jwt_token: ''});
     })
 

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {ObjectContext, Post} from "../helpers/interfaces";
+import {ObjectContext, Post, User} from "../helpers/interfaces";
 import './PostElement.css';
 import {useOutletContext} from "react-router-dom";
 import {datePipe} from "../helpers/functions";
@@ -12,10 +12,12 @@ interface PostProps {
 export default function PostElement(props: PostProps) {
 
     const objectContext: ObjectContext = useOutletContext();
+    const userLikedInit: User | undefined = props.post.likes.find((user: User) => user.username === objectContext.loggedUser.username);
 
     const [likesCount, setLikesCount] = useState<number>(props.post.likes.length);
     const [dateOfPost, setDateOfPost] = useState<string>(datePipe(props.post.created_at));
     const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const [userLiked, setUserLiked] = useState<boolean>(!!userLikedInit);
 
     return (
         <div className="PostsContainer" key={props.post.id}>

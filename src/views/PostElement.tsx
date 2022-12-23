@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {ObjectContext, Post, User} from "../helpers/interfaces";
 import './PostElement.css';
-import {useOutletContext} from "react-router-dom";
-import {datePipe} from "../helpers/functions";
+import {useFormAction, useOutletContext} from "react-router-dom";
+import {datePipe} from "../helpers/dateHelpers";
 
 interface PostProps {
     post: Post,
@@ -10,6 +10,8 @@ interface PostProps {
 }
 
 export default function PostElement(props: PostProps) {
+
+    const f = useFormAction()
 
     const objectContext: ObjectContext = useOutletContext();
     const userLikedInit: User | undefined = props.post.likes.find((user: User) => user.username === objectContext.loggedUser.username);

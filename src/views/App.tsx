@@ -17,12 +17,12 @@ function App() {
                 <li>
                     <Link to={"/"}>HOME</Link>
                 </li>
-                {loggedUser.jwt_token.length == 0 &&
+                {loggedUser.jwt_token.length === 0 &&
                     <li>
                         <Link to={"/login"}>LOG IN</Link>
                     </li>
                 }
-                {loggedUser.jwt_token.length == 0 &&
+                {loggedUser.jwt_token.length === 0 &&
                     <li>
                         <Link to={"/signup"}>SIGN UP</Link>
                     </li>

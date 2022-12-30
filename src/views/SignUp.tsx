@@ -1,30 +1,41 @@
-import React, {FormEvent, useState} from "react";
+import React from "react";
 import axios, {AxiosResponse} from "axios";
 import {REACT_APP_API_URL} from "../react-app-env.d";
-import {FormDataRegister, ObjectContext} from "../helpers/interfaces";
+import {ObjectContext} from "../helpers/interfaces";
 import {useNavigate, useOutletContext} from "react-router-dom";
+import {SubmitHandler, useForm} from "react-hook-form";
+
+type Inputs = {
+    username: string,
+    email: string,
+    password: string,
+    passwordConfirm: string
+};
 
 export default function SignUp() {
 
     const objectContext: ObjectContext = useOutletContext();
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState<FormDataRegister>({
-        username: {
-            value: "", isValid: true, error: "test"
-        },
-        email: {
-            value: "", isValid: true, error: ""
-        },
-        password: {
-            value: "", isValid: true, error: ""
-        },
-        passwordConfirm: {
-            value: "", isValid: true, error: ""
-        },
-    });
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
+        axios.post(`${REACT_APP_API_URL}/user/signup`, {
+            username: data.username,
+            password: data.password,
+            email: data.email
+        }).then((response: AxiosResponse<any>) => {
+            if (response.status === 200) {
+                navigate('/registered');
+            }
+            else {
+                console.log(response);
+            }
+        })
+            .catch((error) => console.error("An error has occurred during registering an user:", error));
+    }
+
+    /*const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         axios.post(`${REACT_APP_API_URL}/user/signup`, {
             username: formData.username,
@@ -39,49 +50,34 @@ export default function SignUp() {
             }
         })
             .catch((error) => console.error("An error has occurred during registering an user:", error));
-    }
+    }*/
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const target = e.target;
-        const name = target.name;
-        setFormData({
-            ...formData,
-            [name]: {
-                value: target.value,
-                valid: target.validity.valid,
-                error: ""
-            }
-        });
-    }
 
     const passwordMatches = () => {
-        return formData.password.value.trim().length > 0
-            && formData.password.value === formData.passwordConfirm.value;
+        return watch().password.trim().length > 0
+            && watch().password === watch().passwordConfirm;
     }
 
     return (<div className="FormContainer">
         <h2>Sign Up</h2>
-        <form name="signupForm" className="FormBody" onSubmit={(e) => handleSubmit(e)}>
-            <label form={formData.username.value}>Username*:</label>
+        <form name="signupForm" className="FormBody" onSubmit={handleSubmit(onSubmit)}>
+            <label >Username*:</label>
             <input type="text"
-                   name="username"
                    placeholder="Enter username"
-                   minLength={3}
-                   onChange={handleInputChange}/>
-            {!formData.username.isValid &&
-                <span className="ValidationMessage">
-                    {formData.username.error}
-                </span>}
-            <label form={formData.email.value}>E-mail*:</label>
+                   {...register("username", { required: true, minLength: 3 })} />
+            {errors.username && <span className="ValidationMessage">{errors.username?.message}</span>}
+            <label >E-mail*:</label>
             <input type="email" placeholder="Enter e-mail"
-                   name="email"
-                   onChange={handleInputChange}/>
-            <label form={formData.password.value}>Password*:</label>
+                   {...register("email", { required: true, pattern: /^\/w+@\/w+.\/w{2}$/ })}/>
+            {errors.email && <span className="ValidationMessage">{errors.email?.message}</span>}
+            <label>Password*:</label>
             <input type="password" placeholder="Enter password"
-                   name="password" onChange={handleInputChange}/>
-            <label form={formData.passwordConfirm.value}>Confirm Password*:</label>
+                   {...register("password", { required: true, pattern: /^\/w+$/ })}/>
+            {errors.password && <span className="ValidationMessage">{errors.password?.message}</span>}
+            <label>Confirm Password*:</label>
             <input type="password" placeholder="Enter password to confirm"
-                   name="passwordConfirm" onChange={handleInputChange}/>
+                   {...register("passwordConfirm", { required: true, pattern: /^\/w+$/ })}/>
+            {errors.passwordConfirm && <span className="ValidationMessage">{errors.passwordConfirm?.message}</span>}
             <button className={passwordMatches() ? 'Button PrimaryButton' : 'Button DisabledButton'}
                     disabled={!passwordMatches()}
                     type="submit">Sign Up</button>

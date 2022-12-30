@@ -54,7 +54,7 @@ export default function SignUp() {
 
 
     const passwordMatches = () => {
-        return watch().password.trim().length > 0
+        return watch().password?.trim().length > 0
             && watch().password === watch().passwordConfirm;
     }
 

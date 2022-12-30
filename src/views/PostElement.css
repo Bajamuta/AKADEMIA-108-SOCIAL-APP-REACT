@@ -25,6 +25,10 @@
     text-align: right;
 }
 
+.SinglePostFooter .Button {
+ margin-left: 20px;
+}
+
 .SinglePostDeleteConfirm {
     display: flex;
     flex-flow: column;

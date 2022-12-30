@@ -86,6 +86,34 @@ export default function Home() {
             })
     }
 
+    const likePost = (id: number) => {
+        return axios.post(`${REACT_APP_API_URL}/post/like`, {
+            post_id: id
+        }).then(
+            (response: AxiosResponse<any>) => {
+                return response.status === 201;
+            }
+        )
+            .catch((error) => {
+                console.error('An error has occurred during liking a post:', error);
+                return false;
+            });
+    }
+
+    const dislikePost = (id: number) => {
+        return axios.post(`${REACT_APP_API_URL}/post/dislike`, {
+            post_id: id
+        }).then(
+            (response: AxiosResponse<any>) => {
+                return response.status === 201;
+            }
+        )
+            .catch((error) => {
+                console.error('An error has occurred during disliking a post:', error);
+                return false;
+            });
+    }
+
     useEffect(() => {
         getLatestPosts();
     }, []);
@@ -108,7 +136,11 @@ export default function Home() {
                 <h2>Posts</h2>
                 {posts.map(
                     (post: Post) => {
-                        return <PostElement post={post} key={post.id} deletePost={() => deletePost(post.id)}/>
+                        return <PostElement post={post} key={post.id}
+                                            deletePost={() => deletePost(post.id)}
+                                            likePost={() => likePost(post.id)}
+                                            dislikePost={() => dislikePost(post.id)}
+                        />
                     }
                 )}
             </div>

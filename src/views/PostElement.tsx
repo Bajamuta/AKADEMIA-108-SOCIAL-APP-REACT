@@ -55,7 +55,7 @@ export default function PostElement(props: PostProps) {
                     <h3>{props.post.user?.username}</h3>
                     {
                         objectContext.loggedUser.username !== props.post.user?.username &&
-                        <button type="button" className="Button SecondaryButton" onClick={props.unfollow(props.post?.user?.id!)}>Unfollow</button>
+                        <button type="button" className="Button SecondaryButton" onClick={() => props.unfollow(props.post?.user?.id!)}>Unfollow</button>
                     }
                     <span className="SinglePostDate">created at: {dateOfPost}</span>
                 </div>

@@ -9,8 +9,8 @@ interface UserFollowElementProps {
 
 export default function UserFollowElement(props: UserFollowElementProps) {
     return (<div className="RecommendationsUserElement">
-        <img src={props.user.avatar_url}/>
+        <img src={props.user.avatar_url} alt={'user ' + props.user.username + ' avatar'}/>
         <h4>{props.user.username}</h4>
-        <button type="button" className="Button PrimaryButton" onClick={props.followUser(props.user.id)}>Follow</button>
+        <button type="button" className="Button PrimaryButton" onClick={() => props.followUser(props.user.id)}>Follow</button>
     </div>);
 }

@@ -117,7 +117,7 @@ export default function Home() {
     }
 
     const getRecommendations = () => {
-        axios.get(`${REACT_APP_API_URL}/follows/recommendations`, {})
+        axios.post(`${REACT_APP_API_URL}/follows/recommendations`, {})
             .then(
             (response: AxiosResponse<User[]>) => {
                 if (response.status === 200)

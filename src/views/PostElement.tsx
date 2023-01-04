@@ -8,7 +8,8 @@ interface PostProps {
     post: Post,
     deletePost: (id: number) => void,
     likePost: (id: number) => Promise<boolean>,
-    dislikePost: (id: number) => Promise<boolean>
+    dislikePost: (id: number) => Promise<boolean>,
+    unfollow: (id: number) => any
 }
 
 export default function PostElement(props: PostProps) {
@@ -20,6 +21,7 @@ export default function PostElement(props: PostProps) {
     const [likesCount, setLikesCount] = useState<number>(props.post.likes.length);
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [userLiked, setUserLiked] = useState<boolean>(!!userLikedInit);
+    const [userFollowed, setUserFollowed] = useState<boolean>(false);
 
     const LikePost = () => {
         props.likePost(props.post.id).then(
@@ -49,9 +51,13 @@ export default function PostElement(props: PostProps) {
         <div className="PostsContainer" key={props.post.id}>
             <div className="SinglePost">
                 <div className="SinglePostHeader">
-                    <img src={props.post.user?.avatar_url} alt="user image"/>
+                    <img src={props.post.user?.avatar_url} alt="user avatar"/>
                     <h3>{props.post.user?.username}</h3>
-                    <span>created at: {dateOfPost}</span>
+                    {
+                        objectContext.loggedUser.username !== props.post.user?.username &&
+                        <button type="button" className="Button SecondaryButton" onClick={props.unfollow(props.post?.user?.id!)}>Unfollow</button>
+                    }
+                    <span className="SinglePostDate">created at: {dateOfPost}</span>
                 </div>
                 <div className="SinglePostBody">
                     <p key={props.post.id}>{props.post.content}</p>

@@ -1,0 +1,12 @@
+.RecommendationsContainer {
+    width: 800px;
+    margin: 0 auto 50px auto;
+    border: 1px solid lightpink;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.RecommendationsUsersList {
+    display: flex;
+    max-height: 300px;
+}

@@ -12,13 +12,19 @@
 .SinglePostHeader {
     height: 60px;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
+    gap: 50px;
     align-items: center;
 }
 
 .SinglePostHeader img {
     height: 100%;
     border-radius: 100%;
+}
+
+.SinglePostDate {
+    flex: 1 1 auto;
+    text-align: right;
 }
 
 .SinglePostFooter {

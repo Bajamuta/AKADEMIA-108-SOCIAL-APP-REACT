@@ -22,10 +22,10 @@ export default function Login() {
         axios.post(`${REACT_APP_API_URL}/user/login`, {
             username: formData.username,
             password: formData.password
-        }).then((response: AxiosResponse<any>) => {
+        }).then((response: AxiosResponse<ResponseLogin>) => {
             if (response.status === 200) {
-                localStorage.setItem("loggedUser", JSON.stringify(response.data as ResponseLogin));
-                objectContext.setLoggedUser(response.data as ResponseLogin);
+                localStorage.setItem("loggedUser", JSON.stringify(response.data));
+                objectContext.setLoggedUser(response.data);
                 navigate('/');
             }
             else {

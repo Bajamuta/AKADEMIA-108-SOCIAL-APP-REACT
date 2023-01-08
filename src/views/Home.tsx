@@ -138,6 +138,10 @@ export default function Home() {
             .then(
                 (response: AxiosResponse<any>) => {
                     console.log('resp2', response);
+                    if (response.status === 201)
+                    {
+                        getLatestPosts();
+                    }
                 }
             )
             .catch((error) => {
@@ -152,6 +156,9 @@ export default function Home() {
             .then(
                 (response: AxiosResponse<any>) => {
                     console.log('unfollow resp', response);
+                    if (response.status === 201) {
+                        getLatestPosts();
+                    }
                 }
             )
             .catch((error) => {

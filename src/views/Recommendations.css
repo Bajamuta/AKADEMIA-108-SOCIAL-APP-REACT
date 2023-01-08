@@ -1,5 +1,5 @@
 .RecommendationsContainer {
-    width: 800px;
+    width: 750px;
     margin: 0 auto 50px auto;
     border: 1px solid lightpink;
     border-radius: 20px;
@@ -8,5 +8,12 @@
 
 .RecommendationsUsersList {
     display: flex;
-    max-height: 300px;
+    height: 300px;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.RecommendationsContainer h2 {
+    text-align: center;
+    margin-bottom: 50px;
 }

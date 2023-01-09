@@ -175,7 +175,7 @@ export default function Home() {
 
     useEffect(() => {
         getLatestPosts();
-    }, []);
+    }, [objectContext.loggedUser]);
 
     return (
         <div className="HomeContainer">

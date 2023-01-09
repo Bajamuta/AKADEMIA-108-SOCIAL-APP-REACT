@@ -18,7 +18,7 @@ export default function SignUp() {
     const objectContext: ObjectContext = useOutletContext();
     const navigate = useNavigate();
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({mode: "onBlur"});
 
     const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
         if (Object.entries(errors).length === 0)

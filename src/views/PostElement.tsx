@@ -21,7 +21,6 @@ export default function PostElement(props: PostProps) {
     const [likesCount, setLikesCount] = useState<number>(props.post.likes.length);
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [userLiked, setUserLiked] = useState<boolean>(!!userLikedInit);
-    const [userFollowed, setUserFollowed] = useState<boolean>(false);
 
     const LikePost = () => {
         props.likePost(props.post.id).then(
@@ -54,7 +53,7 @@ export default function PostElement(props: PostProps) {
                     <img src={props.post.user?.avatar_url} alt="user avatar"/>
                     <h3>{props.post.user?.username}</h3>
                     {
-                        objectContext.loggedUser.username !== props.post.user?.username &&
+                        !!objectContext.loggedUser.username && objectContext.loggedUser.username !== props.post.user?.username &&
                         <button type="button" className="Button SecondaryButton" onClick={() => props.unfollow(props.post?.user?.id!)}>Unfollow</button>
                     }
                     <span className="SinglePostDate">created at: {dateOfPost}</span>
@@ -65,15 +64,15 @@ export default function PostElement(props: PostProps) {
                 <div className="SinglePostFooter">
                     <span>Likes: {likesCount}</span>
                     {
-                        objectContext.loggedUser.username === props.post.user?.username &&
+                        !!objectContext.loggedUser.username && objectContext.loggedUser.username === props.post.user?.username &&
                         <button className="Button DangerButton" onClick={() => setModalVisible(true)}>Delete</button>
                     }
                     {
-                        objectContext.loggedUser.username !== props.post.user?.username && !userLiked &&
+                        !!objectContext.loggedUser.username && !userLiked &&
                         <button className="Button PrimaryButton" onClick={LikePost}>Like</button>
                     }
                     {
-                        objectContext.loggedUser.username !== props.post.user?.username && userLiked &&
+                        !!objectContext.loggedUser.username && userLiked &&
                         <button className="Button SecondaryButton" onClick={DislikePost}>Dislike</button>
                     }
                 </div>

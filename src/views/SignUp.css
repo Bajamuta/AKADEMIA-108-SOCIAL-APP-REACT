@@ -1,0 +1,23 @@
+.ValidationMessage {
+    color: red;
+    font-style: italic;
+    font-size: small;
+    margin: 0;
+}
+
+.Valid {
+    color: green;
+}
+
+input.Valid {
+    border-color: green;
+}
+
+.Invalid {
+    color: red;
+}
+
+input.Invalid
+{
+    border-color: red;
+}

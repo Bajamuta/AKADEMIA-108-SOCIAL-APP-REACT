@@ -1,9 +1,10 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import axios, {AxiosResponse} from "axios";
 import {REACT_APP_API_URL} from "../react-app-env.d";
 import {ObjectContext} from "../helpers/interfaces";
 import {useNavigate, useOutletContext} from "react-router-dom";
 import {SubmitHandler, useForm} from "react-hook-form";
+import "./SignUp.css";
 
 type Inputs = {
     username: string,
@@ -20,75 +21,63 @@ export default function SignUp() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
 
     const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
-        console.log('er', errors.username);
-        axios.post(`${REACT_APP_API_URL}/user/signup`, {
-            username: data.username,
-            password: data.password,
-            email: data.email
-        }).then((response: AxiosResponse<any>) => {
-            if (response.status === 200) {
-                navigate('/registered');
-            }
-            else {
-                console.log(response);
-            }
-        })
-            .catch((error) => console.error("An error has occurred during registering an user:", error));
-    }
-
-    /*const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        axios.post(`${REACT_APP_API_URL}/user/signup`, {
-            username: formData.username,
-            password: formData.password,
-            email: formData.email
-        }).then((response: AxiosResponse<any>) => {
-            if (response.status === 200) {
-                navigate('/registered');
-            }
-            else {
-                console.log(response);
-            }
-        })
-            .catch((error) => console.error("An error has occurred during registering an user:", error));
-    }*/
-
-    const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log('test', e);
-    }
-
-
-    const passwordMatches = () => {
-        return watch().password?.trim().length > 0
-            && watch().password === watch().passwordConfirm;
+        if (Object.entries(errors).length === 0)
+        {
+            axios.post(`${REACT_APP_API_URL}/user/signup`, {
+                username: data.username,
+                password: data.password,
+                email: data.email
+            }).then((response: AxiosResponse<any>) => {
+                if (response.status === 201) {
+                    navigate('/registered');
+                }
+                else {
+                    console.log(response);
+                }
+            })
+                .catch((error) => console.error("An error has occurred during registering an user:", error));
+        }
     }
 
     return (<div className="FormContainer">
         <h2>Sign Up</h2>
         <form name="signupForm" className="FormBody" onSubmit={handleSubmit(onSubmit)}>
-            <label >Username*:</label>
+            <label className={errors.username ? "Invalid" : "Valid"} >Username*:</label>
             <input type="text"
-                   required={true}
+                   className={errors.username ? "Invalid" : "Valid"}
+                   aria-invalid={errors.username ? "true" : "false"}
                    placeholder="Enter username"
-                   {...register("username", { required: true, minLength: 3 })}
-                onChange={(e) => handleInput(e)}
+                   {...register("username",
+                       { required: "This field is required",
+                           minLength: {value: 3, message: "Requires minimum 3 symbols"} })}
             />
-            {errors.username && <span className="ValidationMessage">{errors.username?.message}jh</span>}
-            <label >E-mail*:</label>
+            {errors.username && <p className="ValidationMessage">{errors.username?.message}</p>}
+            <label className={errors.email ? "Invalid" : "Valid"} >E-mail*:</label>
             <input type="email" placeholder="Enter e-mail"
-                   {...register("email", { required: true, pattern: /^\/w+@\/w+.\/w{2}$/ })}/>
-            {errors.email && <span className="ValidationMessage">{errors.email?.message}</span>}
-            <label>Password*:</label>
+                   className={errors.email ? "Invalid" : "Valid"}
+                   aria-invalid={errors.email ? "true" : "false"}
+                   {...register("email", { required: "This field is required",
+                       pattern: {value: /^\w+@\w+.\w{2}$/, message: "Invalid e-mail"} })}/>
+            {errors.email && <p className="ValidationMessage">{errors.email?.message}</p>}
+            <label className={errors.password ? "Invalid" : "Valid"}>Password*:</label>
             <input type="password" placeholder="Enter password"
-                   {...register("password", { required: true, pattern: /^\/w+$/ })}/>
-            {errors.password && <span className="ValidationMessage">{errors.password?.message}</span>}
-            <label>Confirm Password*:</label>
+                   className={errors.password ? "Invalid" : "Valid"}
+                   aria-invalid={errors.password ? "true" : "false"}
+                   {...register("password", { required: "This field is required",
+                       pattern: {value: /^\w+$/, message: "Password should contain only letters and numbers"},
+                       minLength: {value: 8, message: "Requires minimum 8 symbols"}})}/>
+            {errors.password && <p className="ValidationMessage">{errors.password?.message}</p>}
+            <label className={errors.passwordConfirm ? "Invalid" : "Valid"}>Confirm Password*:</label>
             <input type="password" placeholder="Enter password to confirm"
-                   {...register("passwordConfirm", { required: true, pattern: /^\/w+$/ })}/>
-            {errors.passwordConfirm && <span className="ValidationMessage">{errors.passwordConfirm?.message}</span>}
-            {/*<button className={passwordMatches() ? 'Button PrimaryButton' : 'Button DisabledButton'}
-                    disabled={!passwordMatches()}
-                    type="submit">Sign Up</button>*/}
+                   className={errors.passwordConfirm ? "Invalid" : "Valid"}
+                   aria-invalid={errors.passwordConfirm ? "true" : "false"}
+                   {...register("passwordConfirm",
+                       { required: "This field is required",
+                           pattern: {value: /^\w+$/, message: "Password should contain only letters and numbers"},
+                           minLength: {value: 8, message: "Requires minimum 8 symbols"},
+                       validate: {match: (value) => {return watch().password === value ? undefined : "Passwords do not match";}}}
+                   )}/>
+            {errors.passwordConfirm && <p className="ValidationMessage">{errors.passwordConfirm?.message}</p>}
             <button className="Button PrimaryButton"
                         type="submit">Sign Up</button>
         </form>

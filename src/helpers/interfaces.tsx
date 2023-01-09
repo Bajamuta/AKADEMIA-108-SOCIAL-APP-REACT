@@ -45,4 +45,6 @@ export interface ResponseLogin {
 export interface ObjectContext {
     loggedUser: ResponseLogin,
     setLoggedUser: (res: ResponseLogin) => void
+    timeStamp: Date,
+    setTimeStamp: (stamp: Date) => void
 }

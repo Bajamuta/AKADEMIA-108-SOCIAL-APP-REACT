@@ -10,6 +10,8 @@ export default function SignOut() {
     useEffect(() => {
         localStorage.removeItem("loggedUser");
         objectContext.setLoggedUser({jwt_token: ''});
+        objectContext.setTimeStamp(new Date('1999-01-01'));
+        localStorage.removeItem("timeStamp");
     }, []);
 
     return (<div className="Container">

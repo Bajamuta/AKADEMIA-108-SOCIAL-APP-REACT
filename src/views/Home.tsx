@@ -14,13 +14,20 @@ export default function Home() {
     const [recommendations, setRecommendations] = useState<User[]>([]);
 
     // how it works exactly?
-    axios.defaults.headers.common['Authorization'] = "Bearer " + (objectContext.loggedUser.jwt_token.length > 0 ? objectContext.loggedUser.jwt_token : '');
+    axios.defaults.headers.common['Authorization'] = "Bearer " + (objectContext.loggedUser?.jwt_token.length > 0 ? objectContext.loggedUser.jwt_token : '');
+
+    const isLoggedUser = () => {
+        return objectContext.loggedUser?.jwt_token.length > 0;
+    }
 
     const getLatestPosts = () => {
         axios.post(`${REACT_APP_API_URL}/post/latest`).then(
             (response: AxiosResponse<Post[]>) => {
                 setPosts(response.data);
-                getRecommendations();
+                if (isLoggedUser())
+                {
+                    getRecommendations();
+                }
             }
         )
             .catch((error) => {
@@ -168,7 +175,6 @@ export default function Home() {
 
     useEffect(() => {
         getLatestPosts();
-        // getRecommendations();
     }, []);
 
     return (

@@ -25,7 +25,9 @@ export default function Login() {
         }).then((response: AxiosResponse<ResponseLogin>) => {
             if (response.status === 200) {
                 localStorage.setItem("loggedUser", JSON.stringify(response.data));
+                localStorage.setItem("timeStamp", new Date().toDateString());
                 objectContext.setLoggedUser(response.data);
+                objectContext.setTimeStamp(new Date());
                 navigate('/');
             }
             else {
